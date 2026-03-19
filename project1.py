@@ -9,10 +9,10 @@
 #part 0: Call your variables, eat your vegetables
 
 
-import sys
+from sys import argv
 
-ip_address = sys.argv(0)
-cidr_range = sys.argv(1)
+ip_address = argv[1]
+cidr_range = argv[2]
 
 #Core Method:
 #Parse the CIDR notation into an IP address and a prefix length (e.g., 192.168.1.0/24 → network IP: 192.168.1.0, prefix: 24). 
@@ -24,6 +24,15 @@ cidr_range = sys.argv(1)
 #If they are equal, the IP is within the CIDR range. 
 #If they differ, it is not.
 
+#Total IP addresses in a CIDR block:
+#$ 2^{(32 - \text{prefix length})} $
+#Example: For 192.168.1.0/26:
+#$ 2^{(32 - 26)} = 2^6 = 64 $ total addresses. 
+#Usable IP addresses:
+#Subtract 2 (the network address and broadcast address):
+#$ 64 - 2 = 62 $ usable addresses. 
+#Subnet mask:
+#Convert the prefix length to a binary mask (e.g., /24 → 11111111.11111111.11111111.00000000 → 255.255.255.0). 
 
 
 # part 2: evaluate for CIDR range
