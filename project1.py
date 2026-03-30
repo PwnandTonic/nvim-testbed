@@ -7,12 +7,20 @@
 
 
 #part 0: Call your variables, eat your vegetables
+from math import exp2
 
+ip_address = input("What is the IP address?")
+cidr_range = input("What is the IP Range to check?")
 
-from sys import argv
+cidr_range_val = cidr_range[cidr_range.find('/') +1:]
 
-ip_address = argv[1]
-cidr_range = argv[2]
+print(cidr_range_val) # diagnostics, delete for final
+
+cidr_eval = 32 - int(cidr_range_val)
+print(cidr_eval) #diagnostic, delete for final
+
+cidr_eval = exp2(cidr_eval)
+print(cidr_eval)
 
 #Core Method:
 #Parse the CIDR notation into an IP address and a prefix length (e.g., 192.168.1.0/24 → network IP: 192.168.1.0, prefix: 24). 
