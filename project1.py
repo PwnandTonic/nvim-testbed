@@ -12,15 +12,28 @@ from math import exp2
 ip_address = input("What is the IP address?")
 cidr_range = input("What is the IP Range to check?")
 
-cidr_range_val = cidr_range[cidr_range.find('/') +1:]
+cidr_range = int(cidr_range[cidr_range.find('/') +1:])
 
-print(cidr_range_val) # diagnostics, delete for final
+# Thought process here is that for CIDR ranges /24 and greater the address space is contained within the last octet so it's a 
+# simple comparison of the values of that one octet. Should probably run a an if/else statement here to check for that possibility
+# which will avoid the more complicated work of CIDR ranges that spread across more than one octet.
 
-cidr_eval = 32 - int(cidr_range_val)
-print(cidr_eval) #diagnostic, delete for final
+if cidr_range >= 24:
 
-cidr_eval = exp2(cidr_eval)
-print(cidr_eval)
+    print(cidr_range) # diagnostics, delete for final
+
+    cidr_range = 32 - int(cidr_range)
+    print(cidr_range) #diagnostic, delete for final
+
+    cidr_range = int(exp2(cidr_range))
+    print(cidr_range) # yup you guessed it, another diagnostic print statement
+
+    
+
+else:
+    print("I have not built that part of this script yet, be patient")
+
+
 
 #Core Method:
 #Parse the CIDR notation into an IP address and a prefix length (e.g., 192.168.1.0/24 → network IP: 192.168.1.0, prefix: 24). 
