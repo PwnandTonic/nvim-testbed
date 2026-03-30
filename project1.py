@@ -20,15 +20,27 @@ cidr_range = int(cidr_range[cidr_range.find('/') +1:])
 
 if cidr_range >= 24:
 
-    print(cidr_range) # diagnostics, delete for final
-
     cidr_range = 32 - int(cidr_range)
-    print(cidr_range) #diagnostic, delete for final
+    cidr_range = int(exp2(cidr_range)) - 1
 
-    cidr_range = int(exp2(cidr_range))
-    print(cidr_range) # yup you guessed it, another diagnostic print statement
+    ip_address = ip_address.rsplit('.', maxsplit=1)
+    ip_address = int(ip_address[-1])
 
-    
+
+    if ip_address < cidr_range and ip_address > 0:
+        print("Yeah, shit is in that subnet fam")
+
+    elif ip_address == cidr_range:
+        print("Why you sending me the broadcast address? It's part of that /24 subnet but like why you sending me that? ")
+
+    elif ip_address == 0:
+        print("That's the network address for that /24 subnet...it's your first day isn't it?")
+
+    else:
+        print("You might want to check that IP address...shit don't look right on this end")
+
+
+
 
 else:
     print("I have not built that part of this script yet, be patient")
