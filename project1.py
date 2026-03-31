@@ -2,44 +2,56 @@
 # getting comfortable with using neovim and git/github. If you happened to clone this repo thinking it would be cool then
 # I've got some bad news. But anyway, here goes nothing!
 
-# prospective project idea:
 # Determine if an IP address provided by a user is within a given cidr range
 
-
-#part 0: Call your variables, eat your vegetables
 from math import exp2
 
-ip_address = input("What is the IP address?")
-cidr_range = input("What is the IP Range to check?")
+ip_address = input("What is the IP address? ")
+cidr_range = input("What is the IP Range to check? ")
 
-cidr_range = int(cidr_range[cidr_range.find('/') +1:])
+cidr_host_range = int(cidr_range[cidr_range.find('/') +1:])
+#diagnostic print statements
+print(cidr_host_range)
+print(cidr_range)
 
+cidr_range = cidr_range.split("/",1)[0] # strips off the subnet so we can also ensure each octet is correct
+print(cidr_range) #diagnostic
+
+cidr_range = cidr_range.split('.')
+print(cidr_range) #dianostic
 # Thought process here is that for CIDR ranges /24 and greater the address space is contained within the last octet so it's a 
 # simple comparison of the values of that one octet. Should probably run a an if/else statement here to check for that possibility
 # which will avoid the more complicated work of CIDR ranges that spread across more than one octet.
 
-if cidr_range >= 24:
+# Since we now have cidr_range as a list with each element containing one octet we should add logic to check each element and ensure
+# it matches the IP address. Need to figure out where to implement that logic. 
 
-    cidr_range = 32 - int(cidr_range)
-    cidr_range = int(exp2(cidr_range)) - 1
+if cidr_host_range >= 24:
+
+    cidr_host_range = 32 - int(cidr_host_range)
+    cidr_host_range = int(exp2(cidr_host_range)) - 1
 
     ip_address = ip_address.rsplit('.', maxsplit=1)
     ip_address = int(ip_address[-1])
 
-
-    if ip_address < cidr_range and ip_address > 0:
+    if ip_address < cidr_host_range and ip_address > 0:
         print("Yeah, shit is in that subnet fam")
 
-    elif ip_address == cidr_range:
-        print("Why you sending me the broadcast address? It's part of that /24 subnet but like why you sending me that? ")
+    elif ip_address == cidr_host_range:
+        print("Why you sending me the broadcast address? It's part of that subnet but like why you sending me that? ")
 
     elif ip_address == 0:
-        print("That's the network address for that /24 subnet...it's your first day isn't it?")
+        print("That's the network address...it's your first day isn't it?")
+
+    elif ip_address > cidr_host_range:
+        print("Outside that range")
+        print(f"CIDR upperbound is: {cidr_range}")
+        print(f"Your IP host range ends in: {ip_address}")
 
     else:
         print("You might want to check that IP address...shit don't look right on this end")
 
-
+#elif 
 
 
 else:
