@@ -17,7 +17,7 @@ print(cidr_range)
 cidr_range = cidr_range.split("/",1)[0] # strips off the subnet so we can also ensure each octet is correct
 print(cidr_range) #diagnostic
 
-cidr_range = cidr_range.split('.')
+cidr_range = cidr_range.split('.') # breaks each octet into a single element within cidr_range
 print(cidr_range) #dianostic
 # Thought process here is that for CIDR ranges /24 and greater the address space is contained within the last octet so it's a 
 # simple comparison of the values of that one octet. Should probably run a an if/else statement here to check for that possibility
@@ -30,6 +30,8 @@ if cidr_host_range >= 24:
 
     cidr_host_range = 32 - int(cidr_host_range)
     cidr_host_range = int(exp2(cidr_host_range)) - 1
+
+    # cidr_upperbound = 
 
     ip_address = ip_address.rsplit('.', maxsplit=1)
     ip_address = int(ip_address[-1])
@@ -57,7 +59,8 @@ if cidr_host_range >= 24:
 else:
     print("I have not built that part of this script yet, be patient")
 
-
+# The below method will probably yield a much cleaner block of code and and overall simpler program, I'll attempt this method
+# once I've completed the above bone headed approach.
 
 #Core Method:
 #Parse the CIDR notation into an IP address and a prefix length (e.g., 192.168.1.0/24 → network IP: 192.168.1.0, prefix: 24). 
